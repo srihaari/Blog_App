@@ -1,10 +1,31 @@
 const express = require("express");
 
+const morgan = require("morgan");
+
 const app = express();
 
 app.set("view engine", "ejs");
 
 app.listen(3000);
+
+app.use(morgan("dev"));
+
+app.use(morgan("tiny"));
+
+app.use(express.static("public"));
+
+// app.use((req, res, next) => {
+//   console.log("new request made");
+//   console.log("host:", req.hostname);
+//   console.log("path:", req.path);
+//   console.log("method:", req.method);
+//   next();
+// });
+
+// app.use((req, res, next) => {
+//   console.log("in the next middleware");
+//   next();
+// });
 
 app.get("/", (req, res) => {
   const blogs = [
@@ -29,7 +50,7 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/blogs/create", (req, res) => {
-  res.render("create", { title: "Create a bew Blog" });
+  res.render("create", { title: "ask" });
 });
 
 app.use((req, res) => {
