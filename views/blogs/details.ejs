@@ -1,0 +1,46 @@
+<html lang="en">
+
+<%- include("../partials/head.ejs") %>
+
+
+    <body>
+
+        <%- include("../partials/nav.ejs") %>
+
+            <div class="details content">
+                <h2>
+                    <%= blog.title %>
+                </h2>
+                <div class="content">
+                    <p>
+                        <%= blog.body %>
+                    </p>
+                </div>
+                <a class="delete" data-doc="<%= blog._id %> ">
+                    <img src="https://raw.githubusercontent.com/iamshaunjp/node-crash-course/a3b5ff5cf888c670441dfccf9e1e3f759a39fa16/public/trashcan.svg"
+                        alt="trashcan" />
+                </a>
+            </div>
+
+            <%- include("../partials/footer.ejs") %>
+
+                <script>
+                    const trashCan = document.querySelector("a.delete");
+
+                    trashCan.addEventListener("click", (e) => {
+                        const endpoint = `/blogs/${trashCan.dataset.doc}`
+
+                        fetch(endpoint, {
+                            method: 'DELETE'
+                        })
+                            .then((response) => response.json())
+                            .then((data) => window.location.href = data.redirect)
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    })
+                </script>
+
+    </body>
+
+</html>
